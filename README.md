@@ -195,10 +195,13 @@ model call and creates no session. A line that reports a long idle time, as in
 `bull: bash, idle 124s`, tells the chair that the member may be stuck. Set
 `progressLines: false` to switch the feature off.
 
-The server console stays quiet by default. It prints the boot line, one
-`armed N session(s)` line, a room opening and closing, a pause or a resume, and every
-failure. Set `verbose: true` to add the per-session arming line, every mailbox write,
-every task change, and every progress line.
+The server console stays quiet by default. It prints the boot line, a room opening and
+closing, a pause or a resume, and every failure. Set `verbose: true` to add the
+per-session arming line, every mailbox write, every task change, and every progress line.
+
+The plugin arms the chair capability in every root session the harness creates, including
+sessions restored at startup. That work is silent, because it says nothing a reader needs
+and the count is larger than the number of sessions a user has open.
 
 ## Platform limits
 
