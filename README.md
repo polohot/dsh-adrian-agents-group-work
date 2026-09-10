@@ -188,9 +188,11 @@ The row accepts three optional fields.
 | `progressIntervalMs` | `30000` | The interval between progress passes |
 | `shutdownWaitMs` | `20000` | How long `room_close` waits for members to settle |
 
-A progress line comes from a forked turn over that member's own transcript, with every
-tool denied. Each line costs one model call per busy member. Set `progressLines: false`
-to switch the feature off.
+A progress line names the last completed tool call of that member, as in
+`bear: web_search`. The plugin records every completed call in memory, so a line costs no
+model call and creates no session. A line that reports a long idle time, as in
+`bull: bash, idle 124s`, tells the chair that the member may be stuck. Set
+`progressLines: false` to switch the feature off.
 
 ## Platform limits
 

@@ -54,7 +54,7 @@ either form, carries the job and the stop condition.
 | The rule that plain text is invisible | Rule 1 in section 6, in every member prompt |
 | Automatic delivery, no inbox polling | The plugin delivers. A member never polls |
 | Idle notice with the final answer | A settled notice to the chair |
-| A 3-5 word progress line every 30s | A forked summarizer turn per member, 30s default |
+| A progress line every 30s | A line built from the member's own last tool call. No model call, no session |
 | Plan approval and shutdown messages | The same two JSON message shapes |
 | User opens any member's transcript | The built-in subagent catalog, no new UI |
 
@@ -66,6 +66,7 @@ either form, carries the job and the stop condition.
 | A teammate spawned into read-only plan mode | Plan mode is per-agent, the web profile disables the host-plane copy, and each agent preset keeps a private instance. A standalone plugin cannot reach it |
 | Split terminal panes | DSH is a web GUI. The subagent catalog replaces the panel |
 | Team folder deleted at session exit | We archive the room instead, so the record survives |
+| A fork that leaves no transcript | Claude Code's summary fork passes `skipTranscript: true`. The DSH fork provider offers no such option, so this plugin builds the progress line without a fork. See section 7.1 |
 
 ---
 
@@ -252,12 +253,28 @@ The plugin pushes four kinds of notification. The chair stays idle between them.
 |---|---|
 | Direct message | A member sent `to: "chair"` |
 | Settled notice | A member went idle. The notice carries its final answer |
-| Progress line | Every 30 seconds, per member. One line of 3 to 5 words, present tense |
+| Progress line | Every 30 seconds, per member. The line names that member's last completed tool call |
 | Milestone | A task was claimed or completed, and a member joined or left |
 
-The progress line comes from a forked turn over that member's own transcript,
-with tools denied, exactly as Claude Code does. The interval is configurable
-and the feature can be switched off.
+The progress line reads the last completed tool call of that member, as in
+`bear: web_search`. The plugin records every completed call through the platform
+`tools/result` event, so a line costs no model call and creates no session. A line
+that reports a long idle time, as in `bull: bash, idle 124s`, tells the chair that
+the member may be stuck. The interval is configurable and the feature can be
+switched off.
+
+### 7.1 A finding from the first live run
+
+Version 0.1.0 built this line from a forked summarizer turn, because Claude Code
+does. Claude Code's fork passes `skipTranscript: true`, so its forks leave no
+trace. The DSH fork provider offers no such option, so every fork became a real
+session: one new catalog row, one log on disk, and one model call per busy member
+per tick. A five-minute run created 27 such sessions and 1.3 MB of logs, and the
+lines were useless, for example "I write one short line now."
+
+Version 0.1.1 removes the fork. The lesson is general: a copy of another product's
+mechanism must be re-proved on this platform, because one hidden option can carry
+most of the cost.
 
 ---
 
@@ -354,11 +371,14 @@ and the feature can be switched off.
 
 ---
 
-## 13. Open items to settle during the prototype
+## 13. Open items
 
-1. The concurrency check in section 10, item 5.
-2. Whether the forked progress turn shares the member's prompt cache in DSH. If
-   the cost is high, the default interval moves from 30s to 60s.
+1. The concurrency check in section 10, item 5. **Settled:** proven in the first
+   live run. A child ran at 0 s, 19.5 s, and 39.5 s inside the parent's 60-second
+   tool call.
+2. Whether the forked progress turn shares the member's prompt cache in DSH.
+   **Settled:** it does not matter. Version 0.1.1 removed the fork. See section 7.1.
 3. The exact wording of the chair instruction injected by the command handler.
 4. Whether the plugin needs the agent-plane patch in addition to the host-plane
-   patch, or the host plane alone.
+   patch, or the host plane alone. **Settled:** the host plane alone. A clean
+   install from GitHub boots and runs.
