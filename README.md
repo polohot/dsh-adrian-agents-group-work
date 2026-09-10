@@ -199,9 +199,10 @@ The server console stays quiet by default. It prints the boot line, a room openi
 closing, a pause or a resume, and every failure. Set `verbose: true` to add the
 per-session arming line, every mailbox write, every task change, and every progress line.
 
-The plugin arms the chair capability in a session when that session receives its first
-message. A session the harness restores at startup stays unarmed until somebody uses it,
-so a profile with many restored sessions pays for none of them.
+The plugin arms the chair capability in every root session the harness creates, including
+sessions restored at startup. The work is silent. Arming later does not work: the request
+is assembled before the message that would trigger it, so the first request of a session
+must already carry the room tools.
 
 ## Platform limits
 
