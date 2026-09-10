@@ -1,6 +1,6 @@
 {
   "name": "dsh-adrian-agents-group-work",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Group work for DeepSeek Harness: turn one session into a room with a chair and several member agents that message each other and share a task list.",
   "type": "module",
   "main": "lib/index.js",

@@ -195,9 +195,10 @@ model call and creates no session. A line that reports a long idle time, as in
 `bull: bash, idle 124s`, tells the chair that the member may be stuck. Set
 `progressLines: false` to switch the feature off.
 
-The server console stays quiet by default. It prints the boot line, the chair arming, a
-room opening and closing, a pause or a resume, and every failure. Set `verbose: true` to
-add every mailbox write, task change, and progress line.
+The server console stays quiet by default. It prints the boot line, one
+`armed N session(s)` line, a room opening and closing, a pause or a resume, and every
+failure. Set `verbose: true` to add the per-session arming line, every mailbox write,
+every task change, and every progress line.
 
 ## Platform limits
 
