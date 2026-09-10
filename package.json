@@ -1,0 +1,44 @@
+{
+  "name": "dsh-adrian-agents-group-work",
+  "version": "0.1.0",
+  "description": "Group work for DeepSeek Harness: turn one session into a room with a chair and several member agents that message each other and share a task list.",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek",
+    "deepseek-harness",
+    "agents",
+    "group-work",
+    "agents-group-work",
+    "subagents",
+    "team",
+    "room",
+    "chair",
+    "members"
+  ],
+  "author": "adrian",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  }
+}

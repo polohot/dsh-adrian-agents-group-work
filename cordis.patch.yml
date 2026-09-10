@@ -1,0 +1,12 @@
+# dsh-adrian-agents-group-work bundle patch: one host row over the profile.
+#
+# The row name resolves from the profile's own node_modules, where
+# `dsh plugin --profile <name> add dsh-adrian-agents-group-work` installed this
+# package. The row id equals the package name.
+#
+# The row sits on the HOST plane. It registers tools into the scope of one
+# agent, so it publishes no service and needs no realm.
+
+- insert:
+    - id: dsh-adrian-agents-group-work
+      name: dsh-adrian-agents-group-work
