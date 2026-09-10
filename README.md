@@ -75,6 +75,14 @@ Spawn 3 agents to build the site. One builder, one critic.
 The handler injects the brief as a chair instruction and returns. It does not spawn a
 member and it does not wait.
 
+### When a member fails
+
+A member can stop because its model request failed, for example when the provider
+refuses the content. The chair sees silence in that case, so the plugin writes a notice
+to the chair mailbox that names the member and the provider message. The third failure
+inside ten minutes also wakes the chair, because that is a stuck member rather than one
+bad request. The chair then follows the room rule: nudge the member once, then replace it.
+
 The brief may carry the job, the member count, the member names, a model or an effort
 per member, the stop condition, and an output path. The chair decides anything the
 brief leaves out. The chair asks at most one question, and only when the job itself is

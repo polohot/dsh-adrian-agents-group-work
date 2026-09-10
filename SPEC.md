@@ -253,6 +253,7 @@ The plugin pushes four kinds of notification. The chair stays idle between them.
 |---|---|
 | Direct message | A member sent `to: "chair"` |
 | Settled notice | A member went idle. The notice carries its final answer |
+| Failure notice | A member's model request failed. It names the member and the provider message, and wakes the chair on the third failure inside ten minutes (0.1.4) |
 | Progress line | Every 30 seconds, per member. The line names that member's last completed tool call |
 | Milestone | A task was claimed or completed, and a member joined or left |
 
@@ -308,6 +309,7 @@ most of the cost.
 |---|---|
 | Duplicate or invalid member name | Rejected at `room_open`, before any spawn |
 | A member is silent after a wake | The chair nudges once. A second silence replaces the member |
+| A member's model request fails | The chair receives a notice with the member name and the provider message. Three failures inside ten minutes wake the chair (0.1.4) |
 | A replaced member | A new member with a new session. The old member's entries stay in the transcript, marked `void`. The transcript is never rewritten |
 | The owner says to pause | The chair calls `room_pause`. Delivery stops, members finish the current turn, the room stays open |
 | The owner says to continue | The chair calls `room_resume`. Held mail is delivered |
