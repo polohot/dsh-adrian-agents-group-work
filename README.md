@@ -180,19 +180,24 @@ session takes `archive/<roomId>-2`, then `-3`, and so on. An earlier record surv
 
 ## Configuration
 
-The row accepts three optional fields.
+The row accepts four optional fields.
 
 | Field | Default | Meaning |
 |---|---|---|
 | `progressLines` | `true` | Push one short progress line per busy member |
 | `progressIntervalMs` | `30000` | The interval between progress passes |
 | `shutdownWaitMs` | `20000` | How long `room_close` waits for members to settle |
+| `verbose` | `false` | Print every mailbox write, task change, and progress line to the server console |
 
 A progress line names the last completed tool call of that member, as in
 `bear: web_search`. The plugin records every completed call in memory, so a line costs no
 model call and creates no session. A line that reports a long idle time, as in
 `bull: bash, idle 124s`, tells the chair that the member may be stuck. Set
 `progressLines: false` to switch the feature off.
+
+The server console stays quiet by default. It prints the boot line, the chair arming, a
+room opening and closing, a pause or a resume, and every failure. Set `verbose: true` to
+add every mailbox write, task change, and progress line.
 
 ## Platform limits
 
